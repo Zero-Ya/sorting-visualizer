@@ -1,23 +1,23 @@
-import { useEffect, useState } from "react"
-import { randomInts } from "./utils/randomInts.ts"
+import { useState, useEffect } from "react";
+import { useCounterStore } from "./store";
+
+import BubbleSort from "./algorithms/BubbleSort";
 
 const App = () => {
-  const [array, setArray] = useState<number[]>([]);
+  // const { count, increment, decrement } = useCounterStore();
 
-  useEffect(() => {
-    for (let i = 0; i < 200; i++) {
-      const rand = randomInts(100)
-      console.log(rand)
-      setArray(a => [...a, rand])
-    }
-  }, [])
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     console.log(count);
+  //     increment();
+  //   }, 100)
+
+  //   return () => clearInterval(interval)
+  // }, [])
 
   return (
-    <div className="flex justify-center items-end w-5/6 absolute m-auto top-1/2 left-1/2 -translate-1/2">
-      {array.map((num) => (
-        <div className="w-1 bg-gray-100 border text-center " style={{height: `${num * 5}px`}}>
-        </div>
-      ))}
+    <div className="h-screen">
+      <BubbleSort />
     </div>
   )
 }
