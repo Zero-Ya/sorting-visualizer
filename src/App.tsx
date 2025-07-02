@@ -1,23 +1,13 @@
-import { useState, useEffect } from "react";
-import { useCounterStore } from "./store";
-
-import BubbleSort from "./algorithms/BubbleSort";
+// Components
+import Visualizer from "./components/Visualizer";
+import Topbar from "./components/Topbar";
 
 const App = () => {
-  // const { count, increment, decrement } = useCounterStore();
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     console.log(count);
-  //     increment();
-  //   }, 100)
-
-  //   return () => clearInterval(interval)
-  // }, [])
 
   return (
     <div className="h-screen">
-      <BubbleSort />
+      <Topbar />
+      <Visualizer />
     </div>
   )
 }
