@@ -18,3 +18,15 @@ export function getBubbleSortAnim(array: number[]) {
   }
   return { arr, anim };
 }
+
+export function insertionSort(array: number[]) {
+    for (let i = 1; i <array.length; i++) {
+        let numToInsert = array[i];
+        let j = i - 1;
+        while (j >= 0 && array[j] > numToInsert) {
+            array[j + 1] = array[j];
+            j = j - 1;
+        }
+        array[j + 1] = numToInsert;
+    }
+}
