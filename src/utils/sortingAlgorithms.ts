@@ -1,32 +1,42 @@
-export function getBubbleSortAnim(array: number[]) {
+export function getBubbleSortAnim(array: number[]) : {
+  bubbleArr: number[],
+  bubbleAnim: number[][]
+} {
   let swapped = true;
-  let arr = [...array];
-
-	let anim = [];
+  let bubbleArr = [...array];
+	let bubbleAnim = [];
 
   while (swapped) {
     swapped = false;
-    for (let i = 0; i < arr.length - 1; i++) {
-      if (arr[i] > arr[i + 1]) {
-        let temp = arr[i];
-        arr[i] = arr[i + 1];
-        arr[i + 1] = temp;
+    for (let i = 0; i < bubbleArr.length - 1; i++) {
+      if (bubbleArr[i] > bubbleArr[i + 1]) {
+        let temp = bubbleArr[i];
+        bubbleArr[i] = bubbleArr[i + 1];
+        bubbleArr[i + 1] = temp;
         swapped = true;
-        anim.push([i, i + 1]);
+        bubbleAnim.push([i, i + 1]);
       }
     }
   }
-  return { arr, anim };
+  return { bubbleArr, bubbleAnim };
 }
 
-export function insertionSort(array: number[]) {
-    for (let i = 1; i <array.length; i++) {
-        let numToInsert = array[i];
-        let j = i - 1;
-        while (j >= 0 && array[j] > numToInsert) {
-            array[j + 1] = array[j];
-            j = j - 1;
-        }
-        array[j + 1] = numToInsert;
-    }
+export function getInsertionSortAnim(array: number[]) : {
+  insertionArr: number[],
+  insertionAnim: number[][]
+} {
+  let insertionArr = [...array];
+	let insertionAnim = [];
+
+  for (let i = 1; i <insertionArr.length; i++) {
+      let numToInsert = insertionArr[i];
+      let j = i - 1;
+      while (j >= 0 && insertionArr[j] > numToInsert) {
+          insertionAnim.push([j, j + 1]);
+          insertionArr[j + 1] = insertionArr[j];
+          j = j - 1;
+      }
+      insertionArr[j + 1] = numToInsert;
+  }
+  return { insertionArr, insertionAnim };
 }

@@ -3,10 +3,8 @@ import { create } from "zustand";
 type SettingStore = {
     algorithm: string;
     array: number[];
-    animSteps: number[][];
 
     setArray: (data: number[]) => void;
-    setAnimSteps: (data: number[][]) => void;
 
     setBubbleSort: () => void;
     setInsertionSort: () => void;
@@ -15,14 +13,9 @@ type SettingStore = {
 export const useSettingStore = create<SettingStore>((set) => ({
     algorithm: "bubble sort",
     array: [],
-    animSteps: [],
 
     setArray(data) {
         set(() => ({ array: data }));
-    },
-
-    setAnimSteps(data) {
-        set(() => ({ animSteps: data }));
     },
 
     setBubbleSort() {
