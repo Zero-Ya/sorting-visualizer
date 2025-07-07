@@ -1,42 +1,58 @@
 export function getBubbleSortAnim(array: number[]) : {
-  bubbleArr: number[],
-  bubbleAnim: number[][]
+  bubbleArray: number[],
+  bubbleAnim: number[][],
 } {
   let swapped = true;
-  let bubbleArr = [...array];
+  let bubbleArray = [...array];
 	let bubbleAnim = [];
 
   while (swapped) {
     swapped = false;
-    for (let i = 0; i < bubbleArr.length - 1; i++) {
-      if (bubbleArr[i] > bubbleArr[i + 1]) {
-        let temp = bubbleArr[i];
-        bubbleArr[i] = bubbleArr[i + 1];
-        bubbleArr[i + 1] = temp;
+    for (let i = 0; i < bubbleArray.length - 1; i++) {
+      if (bubbleArray[i] > bubbleArray[i + 1]) {
+        let temp = bubbleArray[i];
+        bubbleArray[i] = bubbleArray[i + 1];
+        bubbleArray[i + 1] = temp;
         swapped = true;
         bubbleAnim.push([i, i + 1]);
       }
     }
   }
-  return { bubbleArr, bubbleAnim };
+  return { bubbleArray, bubbleAnim };
 }
 
 export function getInsertionSortAnim(array: number[]) : {
-  insertionArr: number[],
-  insertionAnim: number[][]
+  insertionArray: number[],
+  insertionAnim: number[][],
 } {
-  let insertionArr = [...array];
+  let insertionArray = [...array];
 	let insertionAnim = [];
 
-  for (let i = 1; i <insertionArr.length; i++) {
-      let numToInsert = insertionArr[i];
+  for (let i = 1; i < insertionArray.length; i++) {
+      let numToInsert = insertionArray[i];
       let j = i - 1;
-      while (j >= 0 && insertionArr[j] > numToInsert) {
+      while (j >= 0 && insertionArray[j] > numToInsert) {
           insertionAnim.push([j, j + 1]);
-          insertionArr[j + 1] = insertionArr[j];
+          insertionArray[j + 1] = insertionArray[j];
           j = j - 1;
       }
-      insertionArr[j + 1] = numToInsert;
+      insertionArray[j + 1] = numToInsert;
   }
-  return { insertionArr, insertionAnim };
+  return { insertionArray, insertionAnim };
+}
+
+export function quickSort(array: number[]): number[] {
+  let pivot = array[array.length - 1];
+  let left = [];
+  let right = [];
+  
+  for (let i = 0; i < array.length - 1; i++) {
+    if (array[i] < pivot) {
+      left.push(array[i]);
+    } else {
+      right.push(array[i]);
+    }
+  }
+  
+  return [...quickSort(left), pivot, ...quickSort(right)];
 }

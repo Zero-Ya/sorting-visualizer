@@ -8,18 +8,19 @@ import { randomArray } from "../utils/utils.ts";
 import { useSettingStore } from "../store.ts";
 
 const Visualizer = () => {
-  const { array, setArray } = useSettingStore();
+  const { array, arrayRange, setArray } = useSettingStore();
   
 	useEffect(() => {
-    const randArr = randomArray(400);
+    const randArr = randomArray(arrayRange);
     setArray(randArr);
   }, [])
 
   return (
-    <div>
+    <div className="flex items-center h-full">
 			<div className="flex justify-center items-end w-5/6 m-auto">
         {array?.map((num, index: number) => (
-          <div id={`${index}`} key={num} className="w-1 bg-gray-100 text-center " style={{height: `${num * 1.5}px`}}>
+          <div id={`${index}`} key={index} className="w-1 bg-gray-100 text-center text-xs" style={{height: `${num * 1.5}px`}}>
+            {/* {num} */}
           </div>
         ))}
       </div>

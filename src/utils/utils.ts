@@ -20,25 +20,30 @@ export function randomArray(range: number): number[] {
     return arr;
 }
 
-// Visualize the sorting animation
-export function sortAnim(array: number[][]) {
-    array.forEach(([first, second], index) => {
-        const div1 = document.getElementById(`${first}`);
-        const div2 = document.getElementById(`${second}`);
-        if (!div1 || !div2) return;   
-
-        setTimeout(() => {
-            div1.style.backgroundColor = 'red';
-            div2.style.backgroundColor = 'red'; 
-
-            const divHeight = div1.style.height;
-            div1.style.height = div2.style.height;
-            div2.style.height = divHeight;  
-
-            setTimeout(() => {
-                div1.style.backgroundColor = 'white';
-                div2.style.backgroundColor = 'white';
-            }, 1)
-        }, index * 1)
-    })
+export function sortArray(arr: number[]) {
+    arr.sort((a, b) => a - b);
+    return arr;
 }
+
+// // Visualize the sorting animation
+// export function sortAnim(arrAnim: number[][]) {
+//     arrAnim.forEach(([first, second], index) => {
+//         const div1 = document.getElementById(`${first}`);
+//         const div2 = document.getElementById(`${second}`);
+//         if (!div1 || !div2) return;   
+
+//         setTimeout(() => {
+//             div1.style.backgroundColor = 'red';
+//             div2.style.backgroundColor = 'red'; 
+
+//             const divHeight = div1.style.height;
+//             div1.style.height = div2.style.height;
+//             div2.style.height = divHeight;  
+
+//             setTimeout(() => {
+//                 div1.style.backgroundColor = 'white';
+//                 div2.style.backgroundColor = 'white';
+//             }, 1)
+//         }, index * 1)
+//     })
+// }
