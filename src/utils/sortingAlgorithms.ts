@@ -41,18 +41,47 @@ export function getInsertionSortAnim(array: number[]) : {
   return { insertionArray, insertionAnim };
 }
 
-export function quickSort(array: number[]): number[] {
-  let pivot = array[array.length - 1];
-  let left = [];
-  let right = [];
-  
-  for (let i = 0; i < array.length - 1; i++) {
-    if (array[i] < pivot) {
-      left.push(array[i]);
-    } else {
-      right.push(array[i]);
+export function getQuickSortAnim(array: number[]) : {
+  quickArray: number[],
+  quickAnim: number[][],
+} {
+  let quickArray = [...array];
+  let quickAnim: number[][] = [];
+
+  quickSort(quickArray, quickAnim, 0, quickArray.length - 1);
+
+  return { quickArray, quickAnim };
+}
+
+function quickSort(array: number[], animArray: number[][], start: number, end: number) {
+  if (start < end) {
+    let pivot = partition(array, animArray, start, end);
+
+    quickSort(array, animArray, start, pivot - 1);
+    quickSort(array, animArray, pivot + 1, end);
+  }
+}
+
+function partition (array: number[], animArray: number[][], start: number, end: number) {
+  let temp;
+  let pivot = array[end];
+  let i = start - 1;
+
+  for (let j = start; j <= end - 1; j++) {
+    if (array[j] <= pivot) {
+      i++;
+
+      animArray.push([i, j]);
+      temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
     }
   }
-  
-  return [...quickSort(left), pivot, ...quickSort(right)];
+
+  animArray.push([i + 1, end]);
+  temp = array[i + 1];
+  array[i + 1] = array[end];
+  array[end] = temp;
+
+  return i + 1;
 }

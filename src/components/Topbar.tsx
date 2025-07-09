@@ -2,14 +2,14 @@
 import { useState } from "react";
 
 // Utilities
-import { getBubbleSortAnim, getInsertionSortAnim } from "../utils/sortingAlgorithms.ts";
+import { getBubbleSortAnim, getInsertionSortAnim, getQuickSortAnim } from "../utils/sortingAlgorithms.ts";
 import { randomArray, sortArray } from "../utils/utils.ts";
 
 // Store
 import { useSettingStore } from "../store.ts";
 
 const Topbar = () => {
-  const { algorithm, array, arrayRange, setArray, setBubbleSort, setInsertionSort } = useSettingStore();
+  const { algorithm, array, arrayRange, setArray, setSortAlgo } = useSettingStore();
   const [isSorting, setIsSorting] = useState<boolean>(false);
 
   function visualize() {
@@ -28,6 +28,9 @@ const Topbar = () => {
         const { insertionArray, insertionAnim } = getInsertionSortAnim(array);
         sortAnim(insertionArray, insertionAnim);
         break;
+      case "quick sort":
+        const { quickArray, quickAnim } = getQuickSortAnim(array);
+        sortAnim(quickArray, quickAnim);
     }
   }
 
@@ -61,8 +64,8 @@ const Topbar = () => {
                   setIsSorting(false);
                   setArray(arr);
                 }
-              }, 1)
-        }, index * 1)
+              }, 10)
+        }, index * 10)
     })
   }
 
@@ -74,8 +77,9 @@ const Topbar = () => {
     <div className="w-full p-4 text-black bg-white">
       <div className="flex flex-col items-start">
         <div className="flex gap-4">
-          <button className={`${algorithm === 'bubble sort' && 'text-blue-600'} hover:text-blue-600`} onClick={setBubbleSort}>Bubble Sort</button>
-          <button className={`${algorithm === 'insertion sort' && 'text-blue-600'} hover:text-blue-600`} onClick={setInsertionSort}>Insertion Sort</button>
+          <button className={`${algorithm === 'bubble sort' && 'text-blue-600'} hover:text-blue-600`} onClick={() => setSortAlgo('bubble sort')}>Bubble Sort</button>
+          <button className={`${algorithm === 'insertion sort' && 'text-blue-600'} hover:text-blue-600`} onClick={() => setSortAlgo('insertion sort')}>Insertion Sort</button>
+          <button className={`${algorithm === 'quick sort' && 'text-blue-600'} hover:text-blue-600`} onClick={() => setSortAlgo('quick sort')}>Quick Sort</button>
         </div>
 
         <div className="flex gap-4">

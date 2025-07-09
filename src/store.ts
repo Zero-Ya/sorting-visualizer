@@ -4,18 +4,19 @@ type SettingStore = {
     algorithm: string;
     array: number[];
     arrayRange: number;
+    delay: number;
 
     setArray: (data: number[]) => void;
     setArrayRange: (range: number) => void;
 
-    setBubbleSort: () => void;
-    setInsertionSort: () => void;
+    setSortAlgo: (data: string) => void;
 }
 
 export const useSettingStore = create<SettingStore>((set) => ({
     algorithm: "bubble sort",
     array: [],
-    arrayRange: 200,
+    arrayRange: 400,
+    delay: 1,
 
     setArray(data) {
         set(() => ({ array: data }));
@@ -25,11 +26,7 @@ export const useSettingStore = create<SettingStore>((set) => ({
         set(() => ({ arrayRange: range }));
     },
 
-    setBubbleSort() {
-        set(() => ({ algorithm: "bubble sort" }));
-    },
-
-    setInsertionSort() {
-        set(() => ({ algorithm: "insertion sort" }));
+    setSortAlgo(data) {
+        set(() => ({ algorithm: data }));
     }
 }))
