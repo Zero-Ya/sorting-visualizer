@@ -3,13 +3,16 @@ import { useState } from "react";
 
 // Utilities
 import { getBubbleSortAnim, getInsertionSortAnim, getQuickSortAnim } from "../utils/sortingAlgorithms.ts";
-import { randomArray, sortArray } from "../utils/utils.ts";
+import { randomArray, sortArray, sortAnim } from "../utils/utils.ts";
 
 // Store
 import { useSettingStore } from "../store.ts";
 
+// Components
+import Slider from "./Slider.tsx";
+
 const Topbar = () => {
-  const { algorithm, array, arrayRange, setArray, setSortAlgo } = useSettingStore();
+  const { algorithm, array, arrayRange, setArray, setSortAlgo, delay, setDelay, setArrayRange } = useSettingStore();
   const [isSorting, setIsSorting] = useState<boolean>(false);
 
   function visualize() {
@@ -22,15 +25,15 @@ const Topbar = () => {
     switch(algorithm) {
       case "bubble sort":
         const { bubbleArray, bubbleAnim } = getBubbleSortAnim(array);
-        sortAnim(bubbleArray, bubbleAnim);
+        sortAnim(bubbleArray, bubbleAnim, setIsSorting);
         break;
       case "insertion sort":
         const { insertionArray, insertionAnim } = getInsertionSortAnim(array);
-        sortAnim(insertionArray, insertionAnim);
+        sortAnim(insertionArray, insertionAnim, setIsSorting);
         break;
       case "quick sort":
         const { quickArray, quickAnim } = getQuickSortAnim(array);
-        sortAnim(quickArray, quickAnim);
+        sortAnim(quickArray, quickAnim, setIsSorting);
     }
   }
 
@@ -39,43 +42,13 @@ const Topbar = () => {
     setArray(randArr);
   }
 
-  // Visualize the sorting animation
-  function sortAnim(arr: number[], arrAnim: number[][]) {
-    setIsSorting(true);
-
-    arrAnim.forEach(([first, second], index) => {
-        const div1 = document.getElementById(`${first}`);
-        const div2 = document.getElementById(`${second}`);
-        if (!div1 || !div2) return;   
-    
-        setTimeout(() => {
-            div1.style.backgroundColor = 'red';
-            div2.style.backgroundColor = 'red'; 
-
-            const divHeight = div1.style.height;
-            div1.style.height = div2.style.height;
-            div2.style.height = divHeight;  
-
-            setTimeout(() => {
-                div1.style.backgroundColor = 'white';
-                div2.style.backgroundColor = 'white';
-
-                if (index === arrAnim.length - 1) {
-                  setIsSorting(false);
-                  setArray(arr);
-                }
-              }, 10)
-        }, index * 10)
-    })
-  }
-
   function debug() {
     console.log(isSorting);
   }
 
   return (
     <div className="w-full p-4 text-black bg-white">
-      <div className="flex flex-col items-start">
+      <div className="flex flex-col items-center gap-4">
         <div className="flex gap-4">
           <button className={`${algorithm === 'bubble sort' && 'text-blue-600'} hover:text-blue-600`} onClick={() => setSortAlgo('bubble sort')}>Bubble Sort</button>
           <button className={`${algorithm === 'insertion sort' && 'text-blue-600'} hover:text-blue-600`} onClick={() => setSortAlgo('insertion sort')}>Insertion Sort</button>
@@ -86,6 +59,11 @@ const Topbar = () => {
           <button className="hover:text-blue-600" disabled={isSorting} onClick={randomize}>Randomize</button>
           <button className="hover:text-blue-600" disabled={isSorting} onClick={visualize}>Visualize</button>
           <button className="hover:text-blue-600" onClick={debug}>Debug</button>
+        </div>
+
+        <div>
+          <Slider labelData="Length" data={arrayRange} setData={setArrayRange} isSorting={isSorting} />
+          <Slider labelData="Delay" data={delay} setData={setDelay} isSorting={isSorting} />
         </div>
       </div>
     </div>

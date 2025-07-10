@@ -1,49 +1,66 @@
+import { useSettingStore } from "../store.ts";
+
 export function randomInts(range: number): number {
-    return Math.floor(Math.random() * range) + 1;
+  return Math.floor(Math.random() * range) + 1;
 }
 
 export function randomArray(range: number): number[] {
-    // Generate the array
-    let arr = [];
-    for (let i = 1; i < range + 1; i++) {
-        arr.push(i)
-    }
+  // Generate the array
+  let arr = [];
+  for (let i = 1; i < range + 1; i++) {
+    arr.push(i)
+  }
 
-    // Randomize the array
-    for (let i = arr.length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1));
-        let k: number = arr[i];
-        arr[i] = arr[j];
-        arr[j] = k;
-    }
+  // Randomize the array
+  for (let i = arr.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    let k: number = arr[i];
+    arr[i] = arr[j];
+    arr[j] = k;
+  }
 
-    return arr;
+  return arr;
 }
 
 export function sortArray(arr: number[]) {
-    arr.sort((a, b) => a - b);
-    return arr;
+  arr.sort((a, b) => a - b);
+  return arr;
 }
 
 // // Visualize the sorting animation
-// export function sortAnim(arrAnim: number[][]) {
-//     arrAnim.forEach(([first, second], index) => {
-//         const div1 = document.getElementById(`${first}`);
-//         const div2 = document.getElementById(`${second}`);
-//         if (!div1 || !div2) return;   
+export function sortAnim
+(
+  arr: number[],
+  arrAnim: number[][],
+  setSort: React.Dispatch<React.SetStateAction<boolean>>,
+) {
+  arrAnim.forEach(([first, second], index) => {
+    const delay = useSettingStore.getState().delay;
+    const setArray = useSettingStore.getState().setArray;
 
-//         setTimeout(() => {
-//             div1.style.backgroundColor = 'red';
-//             div2.style.backgroundColor = 'red'; 
+    setSort(true);
 
-//             const divHeight = div1.style.height;
-//             div1.style.height = div2.style.height;
-//             div2.style.height = divHeight;  
+    const div1 = document.getElementById(`${first}`);
+    const div2 = document.getElementById(`${second}`);
+    if (!div1 || !div2) return;   
 
-//             setTimeout(() => {
-//                 div1.style.backgroundColor = 'white';
-//                 div2.style.backgroundColor = 'white';
-//             }, 1)
-//         }, index * 1)
-//     })
-// }
+    setTimeout(() => {
+      div1.style.backgroundColor = 'red';
+      div2.style.backgroundColor = 'red'; 
+
+      const divHeight = div1.style.height;
+      div1.style.height = div2.style.height;
+      div2.style.height = divHeight;  
+
+      setTimeout(() => {
+        div1.style.backgroundColor = 'white';
+        div2.style.backgroundColor = 'white';
+
+        if (index === arrAnim.length - 1) {
+          setSort(false);
+          setArray(arr);
+        }
+      }, delay)
+    }, index * delay)
+  })
+}
