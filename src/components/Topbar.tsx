@@ -2,8 +2,8 @@
 import { useState } from "react";
 
 // Utilities
-import { getBubbleSortAnim, getInsertionSortAnim, getQuickSortAnim } from "../utils/sortingAlgorithms.ts";
-import { randomArray, sortArray, sortAnim } from "../utils/utils.ts";
+import { getBubbleSortAnim, getInsertionSortAnim, getQuickSortAnim, getMergeSortAnim } from "../utils/sortingAlgorithms.ts";
+import { randomArray, sortArray, sortAnim, sortMergeAnim } from "../utils/utils.ts";
 
 // Store
 import { useSettingStore } from "../store.ts";
@@ -34,6 +34,11 @@ const Topbar = () => {
       case "quick sort":
         const { quickArray, quickAnim } = getQuickSortAnim(array);
         sortAnim(quickArray, quickAnim, setIsSorting);
+        break;
+      case "merge sort":
+        const { mergedArray, mergedAnim } = getMergeSortAnim(array);
+        sortMergeAnim(mergedArray, mergedAnim, setIsSorting);
+        break;
     }
   }
 
@@ -43,7 +48,8 @@ const Topbar = () => {
   }
 
   function debug() {
-    console.log(isSorting);
+    // console.log(isSorting);
+    // console.log(getMergeSortAnim(array));
   }
 
   return (
@@ -53,6 +59,7 @@ const Topbar = () => {
           <button className={`${algorithm === 'bubble sort' && 'text-blue-600'} hover:text-blue-600`} onClick={() => setSortAlgo('bubble sort')}>Bubble Sort</button>
           <button className={`${algorithm === 'insertion sort' && 'text-blue-600'} hover:text-blue-600`} onClick={() => setSortAlgo('insertion sort')}>Insertion Sort</button>
           <button className={`${algorithm === 'quick sort' && 'text-blue-600'} hover:text-blue-600`} onClick={() => setSortAlgo('quick sort')}>Quick Sort</button>
+          <button className={`${algorithm === 'merge sort' && 'text-blue-600'} hover:text-blue-600`} onClick={() => setSortAlgo('merge sort')}>Merge Sort</button>
         </div>
 
         <div className="flex gap-4">
@@ -61,7 +68,7 @@ const Topbar = () => {
           <button className="hover:text-blue-600" onClick={debug}>Debug</button>
         </div>
 
-        <div>
+        <div className="w-full">
           <Slider labelData="Length" data={arrayRange} setData={setArrayRange} isSorting={isSorting} />
           <Slider labelData="Delay" data={delay} setData={setDelay} isSorting={isSorting} />
         </div>

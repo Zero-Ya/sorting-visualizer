@@ -18,7 +18,7 @@ const Slider = ({ labelData, data, setData, isSorting }: sliderProps) => {
     <div className="flex flex-col items-center">
       <label>{labelData}: {data}</label>
       <input
-        className="w-[1000px]"
+        className="w-4/5"
         type="range"
         min={minValue}
         max={maxValue}

@@ -5,7 +5,7 @@ import Topbar from "./components/Topbar";
 const App = () => {
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen text-xs md:text-sm lg:text-base">
       <Topbar />
       <Visualizer />
     </div>

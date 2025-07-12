@@ -85,3 +85,51 @@ function partition (array: number[], animArray: number[][], start: number, end: 
 
   return i + 1;
 }
+
+export function getMergeSortAnim(array: number[]) : {
+  mergedArray: number[],
+  mergedAnim: number[][]
+} {
+
+  let mergedArray: number[] = [...array];
+  let mergedAnim: number[][] = [];
+
+  const auxArray = array.slice();
+  mergeSort(mergedArray, auxArray, mergedAnim, 0, array.length - 1);
+
+  return { mergedArray, mergedAnim };
+}
+
+function mergeSort(arr: number[], aux: number[], animArr: number[][], start: number, end: number) {
+  if (start >= end) return;
+
+  const mid = Math.floor((start + end) / 2);
+  mergeSort(arr, aux, animArr, start, mid);
+  mergeSort(arr, aux, animArr, mid + 1, end);
+  merge(arr, aux, animArr, start, mid, end);
+}
+
+function merge(arr: number[], aux: number[], animArr: number[][], start: number, mid: number, end: number) {
+  for (let k = start; k <= end; k++) {
+    aux[k] = arr[k];
+  }
+
+  let i = start;
+  let j = mid + 1;
+
+  for (let k = start; k <= end; k++) {
+    if (i > mid) {
+      animArr.push([aux[j], k]);
+      arr[k] = aux[j++];
+    } else if (j > end) {
+      animArr.push([aux[i], k]);
+      arr[k] = aux[i++];
+    } else if (aux[i] <= aux[j]) {
+      animArr.push([aux[i], k]);
+      arr[k] = aux[i++];
+    } else {
+      animArr.push([aux[j], k]);
+      arr[k] = aux[j++];
+    }
+  }
+}

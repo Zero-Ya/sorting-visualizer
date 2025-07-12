@@ -34,10 +34,10 @@ export function sortAnim
   arrAnim: number[][],
   setSort: React.Dispatch<React.SetStateAction<boolean>>,
 ) {
-  arrAnim.forEach(([first, second], index) => {
-    const delay = useSettingStore.getState().delay;
-    const setArray = useSettingStore.getState().setArray;
+  const delay = useSettingStore.getState().delay;
+  const setArray = useSettingStore.getState().setArray;
 
+  arrAnim.forEach(([first, second], index) => {
     setSort(true);
 
     const div1 = document.getElementById(`${first}`);
@@ -56,6 +56,37 @@ export function sortAnim
         div1.style.backgroundColor = 'white';
         div2.style.backgroundColor = 'white';
 
+        if (index === arrAnim.length - 1) {
+          setSort(false);
+          setArray(arr);
+        }
+      }, delay)
+    }, index * delay)
+  })
+}
+
+// Sorting visualizer but for merge sort
+export function sortMergeAnim(
+  arr: number[],
+  arrAnim: number[][],
+  setSort: React.Dispatch<React.SetStateAction<boolean>>,
+) {
+  const delay = useSettingStore.getState().delay;
+  const arrayRange = useSettingStore.getState().arrayRange;
+  const setArray = useSettingStore.getState().setArray;
+
+  arrAnim.forEach(([newHeight, arrIdx], index) => {
+    setSort(true);
+
+    const div = document.getElementById(`${arrIdx}`);
+    if (!div) return;
+
+    setTimeout(() => {
+      div.style.backgroundColor = 'red';
+      div.style.height = `${newHeight / arrayRange * 100}%`;
+
+      setTimeout(() => {
+        div.style.backgroundColor = 'white';
         if (index === arrAnim.length - 1) {
           setSort(false);
           setArray(arr);
