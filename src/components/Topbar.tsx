@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 // Utilities
-import { getBubbleSortAnim, getInsertionSortAnim, getQuickSortAnim, getMergeSortAnim } from "../utils/sortingAlgorithms.ts";
+import { getBubbleSortAnim, getInsertionSortAnim, getQuickSortAnim, getMergeSortAnim, getHeapSortAnim } from "../utils/sortingAlgorithms.ts";
 import { randomArray, sortArray, sortAnim, sortMergeAnim } from "../utils/utils.ts";
 
 // Store
@@ -39,6 +39,10 @@ const Topbar = () => {
         const { mergedArray, mergedAnim } = getMergeSortAnim(array);
         sortMergeAnim(mergedArray, mergedAnim, setIsSorting);
         break;
+      case "heap sort":
+        const { heapArray, heapAnim } = getHeapSortAnim(array);
+        sortAnim(heapArray, heapAnim, setIsSorting);
+        break;
     }
   }
 
@@ -48,8 +52,7 @@ const Topbar = () => {
   }
 
   function debug() {
-    // console.log(isSorting);
-    // console.log(getMergeSortAnim(array));
+    console.log(getHeapSortAnim(array));
   }
 
   return (
@@ -60,6 +63,7 @@ const Topbar = () => {
           <button className={`${algorithm === 'insertion sort' && 'text-blue-600'} hover:text-blue-600`} onClick={() => setSortAlgo('insertion sort')}>Insertion Sort</button>
           <button className={`${algorithm === 'quick sort' && 'text-blue-600'} hover:text-blue-600`} onClick={() => setSortAlgo('quick sort')}>Quick Sort</button>
           <button className={`${algorithm === 'merge sort' && 'text-blue-600'} hover:text-blue-600`} onClick={() => setSortAlgo('merge sort')}>Merge Sort</button>
+          <button className={`${algorithm === 'heap sort' && 'text-blue-600'} hover:text-blue-600`} onClick={() => setSortAlgo('heap sort')}>Heap Sort</button>
         </div>
 
         <div className="flex gap-4">

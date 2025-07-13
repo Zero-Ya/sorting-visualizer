@@ -133,3 +133,52 @@ function merge(arr: number[], aux: number[], animArr: number[][], start: number,
     }
   }
 }
+
+export function getHeapSortAnim(array: number[]) : {
+  heapArray: number[],
+  heapAnim: number[][]
+} {
+  let heapArray: number[] = [...array];
+  let heapAnim: number[][] = [];
+
+  let n = heapArray.length;
+
+  for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
+    heapify(heapArray, heapAnim, n, i);
+  }
+
+  for (let i = n - 1; i > 0; i--) {
+    heapAnim.push([0, i]);
+    let temp = heapArray[0];
+    heapArray[0] = heapArray[i];
+    heapArray[i] = temp;
+
+    heapify(heapArray, heapAnim, i, 0);
+  }
+
+  return { heapArray, heapAnim };
+}
+
+function heapify(arr: number[], anim: number[][], n: number, i: number) {
+  let largest = i;
+
+  let left = 2 * i + 1;
+  let right = 2 * i + 2;
+
+  if (left < n && arr[left] > arr[largest]) {
+    largest = left;
+  }
+
+  if (right < n && arr[right] > arr[largest]) {
+    largest = right;
+  }
+
+  if (largest !== i) {
+    anim.push([i, largest]);
+    let temp = arr[i];
+    arr[i] = arr[largest];
+    arr[largest] = temp;
+
+    heapify(arr, anim, n, largest);
+  }
+}
